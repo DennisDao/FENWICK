@@ -89,6 +89,11 @@ namespace FENWICK
         /// </summary>
         public static void Summary(string filePath)
         {
+            if (string.IsNullOrEmpty(filePath))
+            {
+                Console.WriteLine(@"Please enter a valid path e.g C:\Users\Dennis\Desktop\test.txt");
+                return;
+            } 
             string data;
             StringBuilder table = new StringBuilder();
             List<Decimal> list = new List<Decimal>();
@@ -159,7 +164,7 @@ namespace FENWICK
         /// <returns>Filepath to file</returns>
         public static string GetUserFilePath(string userInput)
         {
-            string filePath = userInput.Split(' ')[1];
+            string filePath = userInput.Split(' ').Length > 1 ? userInput.Split(' ')[1] : "";
             return filePath;
         }
 
