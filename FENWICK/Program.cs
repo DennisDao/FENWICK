@@ -89,12 +89,12 @@ namespace FENWICK
         /// </summary>
         public static void Summary(string filePath)
         {
-            //Pass the file path and file name to the StreamReader constructor
             string data;
             StringBuilder table = new StringBuilder();
             List<Decimal> list = new List<Decimal>();
             try
             {
+                //Pass the file path and file name to the StreamReader constructor
                 using (StreamReader file = new StreamReader(filePath))
                 {
                     while ((data = file.ReadLine()) != null)
