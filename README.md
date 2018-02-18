@@ -9,7 +9,7 @@ Windows machine
 Vistul studio<br />
 To get started:<br />
 ---
-## To get started
+### To get started
 ---
 Download the project<br />
 Extract the File<br />
@@ -19,7 +19,7 @@ Create a .txt file and save to a location of your choice <br />
 Open command prompt and naviagte to Stats.exe note:you can find the excutable in the debug folder of the solution directory<br />
 ---
 
-## example commands: <br />
+### example commands: <br />
 ---
  HELP   Display software usage <br />
  RECORD   Insert data to txt file e.g RECORD  FILEPATH  VALUES <br />
