@@ -110,6 +110,7 @@ namespace FENWICK
                     if (list == null)
                     {
                         Console.WriteLine("No data");
+                        return;
                     }
                     else
                     {
@@ -183,7 +184,7 @@ namespace FENWICK
             foreach(string value in strArray)
             {
                 if (Decimal.TryParse(value, out number)){
-                    list.Add(Convert.ToDecimal(value));
+                    list.Add(Convert.ToDecimal(number));
                 }
                 else
                 {
