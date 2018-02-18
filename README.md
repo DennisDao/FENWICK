@@ -2,13 +2,13 @@
 
 This project is an technical solution to Fenwick technical test.
 
-Requirements:
+### Requirements:
 
+```
 Windows machine
-```
 Vistul studio
-To get started:
 ```
+
 ### To get started
 ```
 Download the project
