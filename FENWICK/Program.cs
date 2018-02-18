@@ -11,17 +11,9 @@ namespace Stats
     {
         private static string _option;
         private static string _filePath;
-        private static bool isContinue = true;
-
-        static void Main(string[] args)
+        
+        static void Main(string[] inputs)
         {
-            Console.WriteLine("-----Welcome To Fenwick software-----");
-            Console.WriteLine("-----Enter Help to view usage-----");
-
-            while (isContinue)
-            {
-                Console.WriteLine("Type a command:");
-                string inputs = Console.ReadLine();
                 _option = GetUserOption(inputs);
 
                 switch (_option.ToUpper())
@@ -37,15 +29,11 @@ namespace Stats
                     case "HELP":
                         Help();
                         break;
-                    case "QUIT":
-                        Help();
-                        isContinue = false;
-                        break;
                     default:
-                        Console.WriteLine("Please enter a valid command, type help to view usage");
+                        Console.WriteLine("Invalid command!");
+                        Help();
                         break;
                 }
-            }
         }
 
         /// <summary>
@@ -62,18 +50,20 @@ namespace Stats
                     throw new FileNotFoundException("File does not exsist or ensure the file is type of .txt extension");
                 }
 
-                if (data.Count == 0)
+                if (data == null)
                 {
                     Console.WriteLine("Please enter valid numerical values! example 12.1, 6, 25.1");
                     return;
                 }
-
-                using (StreamWriter writer = File.AppendText(filePath))
+                else
                 {
-                    foreach (decimal val in data)
-                        writer.WriteLine(val);
-                }
-                Console.WriteLine("{0} new record inserted!", data.Count());    
+                    using (StreamWriter writer = File.AppendText(filePath))
+                    {
+                        foreach (decimal val in data)
+                            writer.WriteLine(val);
+                    }
+                    Console.WriteLine("{0} new record inserted!", data.Count());
+                } 
             }
             catch(Exception ex)
             {
@@ -150,9 +140,9 @@ namespace Stats
         /// </summary>
         /// <param name="userInput"></param>
         /// <returns>user option</returns>
-        public static string GetUserOption(string userInput)
+        public static string GetUserOption(string[] userInput)
         {
-            string option = userInput.Split()[0];
+            string option = userInput[0];
             return option;
         }
 
@@ -161,9 +151,9 @@ namespace Stats
         /// </summary>
         /// <param name="userInput"></param>
         /// <returns>Filepath to file</returns>
-        public static string GetUserFilePath(string userInput)
+        public static string GetUserFilePath(string[] userInput)
         {
-            string filePath = userInput.Split(' ').Length > 1 ? userInput.Split(' ')[1] : "";
+            string filePath = userInput.Length > 1 ? userInput[1] : "";
             return filePath;
         }
 
@@ -191,13 +181,12 @@ namespace Stats
         /// </summary>
         /// <param name="userInput"></param>
         /// <returns>List of decimal numbers</returns>
-        public static List<Decimal> GetDecimalValues(string userInput)
+        public static List<Decimal> GetDecimalValues(string[] userInput)
         {
-            string[] strArray = userInput.Split().Skip(2).ToArray();
+            string[] strArray = userInput.Skip(2).ToArray();
             List<Decimal> list = new List<Decimal>();
             decimal number;
-            int i = 0;
-
+   
             foreach(string value in strArray)
             {
                 if (Decimal.TryParse(value, out number)){
@@ -205,6 +194,7 @@ namespace Stats
                 }
                 else
                 {
+                    //Console.WriteLine("Please enter numeric values e.g 1.2 10 88");
                     return null;
                 }
             }
