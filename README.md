@@ -6,7 +6,7 @@ This project is an technical solution to Fenwick technical test.
 
 ```
 Windows machine
-Vistul studio
+Visual studio 2015 or 2017
 ```
 
 ### To get started
