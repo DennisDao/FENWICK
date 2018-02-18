@@ -55,28 +55,25 @@ namespace FENWICK
         /// <param name="data">List of decimal values</param>
         public static void Record(string filePath, List<Decimal> data)
         {
-            if (data == null)
-            {
-                Console.WriteLine("Please enter valid numerical values! example 12.1, 6, 25.1");
-                return;
-            }
-             
             try
             {
-                bool isExist = File.Exists(filePath);
-                if (isExist)
+                if (!CheckFile(filePath, ".txt"))
                 {
-                    using (StreamWriter writer = File.AppendText(filePath))
-                    {
-                        foreach (decimal val in data)
-                            writer.WriteLine(val);
-                    }
-                    Console.WriteLine("{0} new record inserted!", data.Count());
+                    throw new FileNotFoundException("File does not exsist or ensure the file is type of .txt extension");
                 }
-                else
+
+                if (data.Count == 0)
                 {
-                    throw new FileNotFoundException("File does not exsist or check the file extension");
-                }          
+                    Console.WriteLine("Please enter valid numerical values! example 12.1, 6, 25.1");
+                    return;
+                }
+
+                using (StreamWriter writer = File.AppendText(filePath))
+                {
+                    foreach (decimal val in data)
+                        writer.WriteLine(val);
+                }
+                Console.WriteLine("{0} new record inserted!", data.Count());    
             }
             catch(Exception ex)
             {
@@ -85,20 +82,22 @@ namespace FENWICK
         }
 
         /// <summary>
-        /// Print Average, Max & Total records in data file in a table format.
+        /// Method to Print Average, Max & Total records in data file
+        /// and summarise data into a table format.
         /// </summary>
         public static void Summary(string filePath)
         {
-            if (string.IsNullOrEmpty(filePath))
-            {
-                Console.WriteLine(@"Please enter a valid path e.g C:\Users\Dennis\Desktop\test.txt");
-                return;
-            } 
             string data;
             StringBuilder table = new StringBuilder();
             List<Decimal> list = new List<Decimal>();
+
             try
             {
+                if (!CheckFile(filePath, ".txt"))
+                {
+                    throw new FileNotFoundException("File does not exsist or ensure the file is type of .txt extension");
+                }
+
                 //Pass the file path and file name to the StreamReader constructor
                 using (StreamReader file = new StreamReader(filePath))
                 {
@@ -107,7 +106,7 @@ namespace FENWICK
                         list.Add(Convert.ToDecimal(data));
                     }
 
-                    if (list == null)
+                    if (list.Count == 0)
                     {
                         Console.WriteLine("No data");
                         return;
@@ -127,13 +126,13 @@ namespace FENWICK
             }
             catch (FileNotFoundException ex)
             {
-                Console.WriteLine("File does not exsist or check the file extension");
+                Console.WriteLine(ex.Message);
             }
            
         }
 
         /// <summary>
-        /// Prints software usage 
+        /// Method Prints software usage 
         /// </summary>
         public static void Help()
         {
@@ -153,7 +152,6 @@ namespace FENWICK
         /// <returns>user option</returns>
         public static string GetUserOption(string userInput)
         {
-            //Add a space to input as user can type in help only
             string option = userInput.Split()[0];
             return option;
         }
@@ -167,6 +165,25 @@ namespace FENWICK
         {
             string filePath = userInput.Split(' ').Length > 1 ? userInput.Split(' ')[1] : "";
             return filePath;
+        }
+
+        /// <summary>
+        /// Function to validate supplied filepath and extension
+        /// </summary>
+        /// <param name="filePath">Path to file</param>
+        /// <param name="extension">extension type</param>
+        /// <returns>true or false base on condition</returns>
+        public static bool CheckFile(string filePath, string extension)
+        {
+            if (string.IsNullOrEmpty(filePath))
+            {
+                Console.WriteLine(@"Please enter a valid file path e.g C:\Users\Dennis\Desktop\test.txt");
+            }
+            if (File.Exists(filePath) && Path.GetExtension(filePath) == extension)
+            {
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
