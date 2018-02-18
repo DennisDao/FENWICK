@@ -39,7 +39,7 @@ namespace Stats
             }
             else
             {
-                return;
+                Console.WriteLine("Invalid command!");
             }        
         }
 
