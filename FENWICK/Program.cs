@@ -14,6 +14,8 @@ namespace Stats
         
         static void Main(string[] inputs)
         {
+            if (inputs.Any())
+            {
                 _option = GetUserOption(inputs);
 
                 switch (_option.ToUpper())
@@ -34,6 +36,11 @@ namespace Stats
                         Help();
                         break;
                 }
+            }
+            else
+            {
+                return;
+            }        
         }
 
         /// <summary>
